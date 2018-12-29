@@ -1,6 +1,7 @@
 module V1
   class ContactsController < ApplicationController
     # @return [Object]
+    before_action :authenticate_user!
     def index
       @contacts = Contact.all
       render status: :ok

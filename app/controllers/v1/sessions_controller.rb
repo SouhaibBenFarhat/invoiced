@@ -1,18 +1,16 @@
 # frozen_string_literal: true
-
 module V1
-  class SessionsController < ApplicationController
-    def create
-      @user = User.where(email: params[:email]).first
-      if @user&.valid_password?(params[:password])
-        render :create, status: :created
-      else
-        head(:unauthorized)
-      end
+  class SessionsController < Devise::SessionsController
+    respond_to :json
+
+    private
+
+    def respond_with(resource, _opts = {})
+      render json: resource
     end
 
-    def destroy
-
+    def respond_to_on_destroy
+      head :no_content
     end
   end
 end
