@@ -2,7 +2,13 @@ module V1
   class ProductsController < ApplicationController
     def index
       @products = Product.all
+      puts @products
       render json: {message: "success", count: @products.count, data: {products: @products}}, status: :ok
+    end
+
+    def show
+      @product = Product.find_by(id: params[:id])
+      render json: {message: "success",  data: {products: @product}}, status: :ok
     end
 
     def create

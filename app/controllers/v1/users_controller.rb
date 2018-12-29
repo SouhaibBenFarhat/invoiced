@@ -3,6 +3,18 @@
 module V1
   # Comment
   class UsersController < ApplicationController
+
+    def index
+      @users = User.all
+      render json: {message: "success", data: {users: @users}}, status: :ok
+    end
+
+    def show
+      @user = User.find_by(id: params[:id])
+      render json: {message: "success", data: {user:@user.as_json(include: :products)}}, status: :ok
+
+    end
+
     def create
       @user = User.new(user_params)
       if @user.save
